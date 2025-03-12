@@ -1,0 +1,9 @@
+export enum WasmErrorCodes {
+	ERROR_NO_ERROR = 0,
+	ERROR_OPERATION_FAILED = 1,
+	ERROR_INITIALIZATION_FAILED = 2,
+	ERROR_NO_FONT_LOADED = 3,
+	ERROR_MORE_DATA = 4
+}
+
+export default WasmErrorCodes
