@@ -12,7 +12,7 @@ const Msdfgen = require("msdfgen-wasm").Msdfgen
 
 async function run() {
 	// create the module
-	const wasm = fs.readFileSync("./wasm/msdfgen.wasm")
+	const wasm = fs.readFileSync(require.resolve("msdfgen-wasm/wasm"))
 	const msdfgen = await Msdfgen.create(wasm)
 
 	// load font file (supports ttf, otf and woff, woff2 not supported as brotli not included in build)
@@ -101,8 +101,8 @@ async function run() {
 	const bmFontJson = {
 		pages: images.map((x, i) => `font_${i}.png`),
 		info: {
-			size: 1,
-			face: ""
+			size: msdfOptions.size,
+			face: "font"
 		},
 		common: {
 			lineHeight: round(metrics.lineHeight),
@@ -116,7 +116,7 @@ async function run() {
 	}
 
 	fs.writeFileSync("font.json", JSON.stringify(bmFontJson))
-	images.map((x, i) => fs.writeFileSync(`font_${i}.png`, x))
+	images.forEach((x, i) => fs.writeFileSync(`font_${i}.png`, x))
 }
 
 run().catch(e => console.error(e))
